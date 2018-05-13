@@ -2,8 +2,8 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const router = require('../routes');
-const fileType = require('../config/filetype');
+const router = require('./routes');
+const fileType = require('./config/filetype');
 class FeDevServer {
     constructor() {
         this.handle = {};
