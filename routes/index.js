@@ -1,9 +1,9 @@
 const url = require('url');
 const http = require('http');
 const querystring = require('querystring');
-const proxyTable = require('../config/proxy_table');
 class FeDevRouter {
     constructor() {
+        this.proxyTable = {};
     }
 
     /**
@@ -54,7 +54,7 @@ class FeDevRouter {
         const self = this;
         const params = url.parse(request.url, true).query;
         const proxyKey = pathName.split('/')[1];
-        if (proxyTable[proxyKey]) {
+        if (self.proxyTable[proxyKey]) {
             // https://www.cnblogs.com/gamedaybyday/p/6637933.html
             const options = self.setRequestOptions('get', proxyKey, pathName, params);
             let req = http.request(options, (res) => {
@@ -92,7 +92,7 @@ class FeDevRouter {
             data = decodeURI(data);
             const params = querystring.parse(data);
 
-            if (proxyTable[proxyKey]) {
+            if (self.proxyTable[proxyKey]) {
                 // https://www.cnblogs.com/gamedaybyday/p/6637933.html
                 const options = self.setRequestOptions('post', proxyKey, pathName, params);
                 let req = http.request(options, (res) => {
@@ -132,8 +132,8 @@ class FeDevRouter {
         };
         const options = {
             method: method.toUpperCase(),
-            hostname: proxyTable[proxyKey].host,
-            port: proxyTable[proxyKey].port,
+            hostname: self.proxyTable[proxyKey].host,
+            port: self.proxyTable[proxyKey].port,
             path: method === 'get' ? `${pathName}?${content}` : pathName
         };
         if (method === 'post') {
