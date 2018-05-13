@@ -1,23 +1,26 @@
 {
-    "name": "fe-dev-server",
-    "version": "1.0.0",
-    "description": "前端开发服务器，需要支持代理功能",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/QiaXue-Tech/fe-dev-server.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/QiaXue-Tech/fe-dev-server/issues"
-    },
-    "homepage": "https://github.com/QiaXue-Tech/fe-dev-server#readme",
-    "devDependencies": {
-        "jshint": "^2.9.5",
-        "request": "^2.85.0"
-    }
+  "name": "fe-dev-server",
+  "version": "1.0.0",
+  "description": "前端开发服务器，需要支持代理功能",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QiaXue-Tech/fe-dev-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QiaXue-Tech/fe-dev-server/issues"
+  },
+  "homepage": "https://github.com/QiaXue-Tech/fe-dev-server#readme",
+  "devDependencies": {
+    "jshint": "^2.9.5",
+    "request": "^2.85.0"
+  },
+  "dependencies": {
+    "@types/node": "^10.0.8"
+  }
 }

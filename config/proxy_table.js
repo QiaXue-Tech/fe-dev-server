@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    api: {
+    'api': {
         host: 'localhost',
         port: 8000
     }
