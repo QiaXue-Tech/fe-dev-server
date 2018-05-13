@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/index.js",
+            "program": "${workspaceFolder}/app/index.js",
             "runtimeExecutable": "/home/lowe/Git/nvm/versions/node/v8.11.1/bin/node"
         }
     ]
