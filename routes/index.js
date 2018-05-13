@@ -15,6 +15,7 @@ class FeDevRouter {
      */
     route(handle, pathName, response, request) {
         const self= this;
+        pathName.lastIndexOf('.')
         /**
          * @type {Function}
          */

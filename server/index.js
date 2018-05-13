@@ -3,6 +3,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 const router = require('../routes');
+const fileType = require('../config/filetype');
 class FeDevServer {
     constructor() {
         this.handle = {};
@@ -32,10 +33,34 @@ class FeDevServer {
                 res.end();
                 return;
             }
+
+            if(self.getStaticResource(pathName, res)) {
+                return;
+            }
+
             self.router.route(self.handle, pathName, res, req);
         });
 
         server.listen(Number(port) || 8080, callback);
+    }
+    
+    /**
+     * 
+     * @param {String} pathName 
+     * @param {ServerResponse} response 
+     */
+    getStaticResource(pathName, response) {
+        const self = this;
+        const suffixIndex = pathName.lastIndexOf('.');
+        if(suffixIndex > 0) {
+            const suffix = pathName.substring(suffixIndex);
+            const contentType = fileType[suffix];
+            const buffer = fs.readFileSync(`.${pathName}`);
+            response.writeHead(200, { 'Content-Type': contentType });
+            response.end(buffer);
+            return true;
+        }
+        return false;
     }
 
     /**
