@@ -26,6 +26,28 @@ class FeDevServer {
             callback = null;
         }
 
+        /**
+         * 处理静态资源
+         * @param {String} pathName 
+         * @param {ServerResponse} response 
+         */
+        const getStaticResource = (pathName, response) => {
+            const self = this;
+            const suffixIndex = pathName.lastIndexOf('.');
+            if (suffixIndex > 0) {
+                const suffix = pathName.substring(suffixIndex);
+                const contentType = fileType[suffix];
+                const buffer = fs.readFileSync(`.${pathName}`);
+                response.writeHead(200, {
+                    'Content-Type': contentType
+                });
+                response.end(buffer);
+                return true;
+            }
+            return false;
+        };
+
+
         const server = http.createServer((req, res) => {
             const pathName = url.parse(req.url).pathname;
             if (pathName === '/favicon.ico') {
@@ -34,7 +56,7 @@ class FeDevServer {
                 return;
             }
 
-            if(self.getStaticResource(pathName, res)) {
+            if (self.getStaticResource(pathName, res)) {
                 return;
             }
 
@@ -42,25 +64,6 @@ class FeDevServer {
         });
 
         server.listen(Number(port) || 8080, callback);
-    }
-    
-    /**
-     * 
-     * @param {String} pathName 
-     * @param {ServerResponse} response 
-     */
-    getStaticResource(pathName, response) {
-        const self = this;
-        const suffixIndex = pathName.lastIndexOf('.');
-        if(suffixIndex > 0) {
-            const suffix = pathName.substring(suffixIndex);
-            const contentType = fileType[suffix];
-            const buffer = fs.readFileSync(`.${pathName}`);
-            response.writeHead(200, { 'Content-Type': contentType });
-            response.end(buffer);
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -99,9 +102,9 @@ class FeDevServer {
         self.handle[pathName] = {
             method: 'get',
             callback: (req, res) => {
-                res.setHeader('Content-Type','text/html;charset=utf-8');
+                res.setHeader('Content-Type', 'text/html;charset=utf-8');
                 fs.readFile(`.${viewPath}`, (err, data) => {
-                    if(err) {
+                    if (err) {
                         res.writeHead(404);
                         res.end();
                     }
