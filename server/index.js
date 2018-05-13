@@ -1,6 +1,7 @@
 'use strict';
 const http = require('http');
 const url = require('url');
+const fs = require('fs');
 const router = require('../routes');
 class FeDevServer {
     constructor() {
@@ -21,12 +22,7 @@ class FeDevServer {
         }
 
         if (typeof callback !== 'function') {
-            handle = callback;
             callback = null;
-        }
-
-        if (Object.prototype.toString.call(handle) !== '[object Object]') {
-            handle = {};
         }
 
         const server = http.createServer((req, res) => {
@@ -34,6 +30,7 @@ class FeDevServer {
             if (pathName === '/favicon.ico') {
                 res.writeHead(200);
                 res.end();
+                return;
             }
             self.router.route(self.handle, pathName, res, req);
         });
@@ -64,6 +61,29 @@ class FeDevServer {
         self.handle[pathName] = {
             method: 'get',
             callback: callback
+        };
+    }
+
+    /**
+     * 加载页面
+     * @param {String} pathName 请求地址
+     * @param {String} viewPath 视图路径
+     */
+    renderView(pathName, viewPath) {
+        const self = this;
+        self.handle[pathName] = {
+            method: 'get',
+            callback: (req, res) => {
+                res.setHeader('Content-Type','text/html;charset=utf-8');
+                fs.readFile(`.${viewPath}`, (err, data) => {
+                    if(err) {
+                        res.writeHead(404);
+                        res.end();
+                    }
+
+                    res.end(data);
+                });
+            }
         };
     }
 }
