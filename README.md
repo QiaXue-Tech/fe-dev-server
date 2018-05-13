@@ -3,7 +3,7 @@
 
 安装:
 ```
-    npm install git+https://github.com/lowequincy/fe-dev-server.git
+npm install git+https://github.com/lowequincy/fe-dev-server.git
 ```
 
 - [x] 能够处理静态资源请求
