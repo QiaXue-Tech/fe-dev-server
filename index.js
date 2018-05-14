@@ -2,8 +2,8 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const router = require('./routes');
-const fileType = require('./config/filetype');
+const router = require('./lib/router');
+const fileType = require('./lib/config/filetype');
 class FeDevServer {
     constructor() {
         this.handle = {};
@@ -56,7 +56,7 @@ class FeDevServer {
                 return;
             }
 
-            if(self.getStaticResource(pathName, res)) {
+            if(getStaticResource(pathName, res)) {
                 return;
             }
 
