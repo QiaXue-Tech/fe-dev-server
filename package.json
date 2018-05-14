@@ -1,6 +1,6 @@
 {
-  "name": "fe-dev-server",
-  "version": "1.0.0",
+  "name": "qx-fe-dev-server",
+  "version": "0.1.0",
   "description": "前端开发服务器，需要支持代理功能",
   "main": "index.js",
   "scripts": {

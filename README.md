@@ -1,9 +1,17 @@
 # fe-dev-server
+
 前端开发服务器，需要支持代理功能
 
 安装:
-```
+
+``` bash
 npm install git+https://github.com/lowequincy/fe-dev-server.git
+```
+
+或者:
+
+``` bash
+npm install qx-fe-dev-server
 ```
 
 - [x] 能够处理静态资源请求

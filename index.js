@@ -8,6 +8,7 @@ class FeDevServer {
     constructor() {
         this.handle = {};
         this.router = router;
+        this.indexPage = '';
     }
 
     /**
@@ -53,6 +54,20 @@ class FeDevServer {
             if (pathName === '/favicon.ico') {
                 res.writeHead(200);
                 res.end();
+                return;
+            }
+
+            if (pathName === '/') {
+                res.setHeader('Content-Type','text/html;charset=utf-8');
+                fs.readFile(self.indexPage || `./index.html`, (err, data) => {
+                    if(err) {
+                        res.writeHead(404);
+                        res.end();
+                        return;
+                    }
+
+                    res.end(data);
+                });
                 return;
             }
 
@@ -107,6 +122,7 @@ class FeDevServer {
                     if(err) {
                         res.writeHead(404);
                         res.end();
+                        return;
                     }
 
                     res.end(data);
