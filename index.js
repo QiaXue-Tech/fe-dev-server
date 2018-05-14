@@ -18,7 +18,8 @@ class FeDevServer {
      */
     runServer(port, callback, handle) {
         const self = this;
-
+        self.renderView('/', self.indexPage || `/index.html`);
+        
         if (isNaN(Number(port))) {
             callback = port;
         }
@@ -54,20 +55,6 @@ class FeDevServer {
             if (pathName === '/favicon.ico') {
                 res.writeHead(200);
                 res.end();
-                return;
-            }
-
-            if (pathName === '/') {
-                res.setHeader('Content-Type','text/html;charset=utf-8');
-                fs.readFile(self.indexPage || `./index.html`, (err, data) => {
-                    if(err) {
-                        res.writeHead(404);
-                        res.end();
-                        return;
-                    }
-
-                    res.end(data);
-                });
                 return;
             }
 
@@ -121,7 +108,7 @@ class FeDevServer {
                 fs.readFile(`.${viewPath}`, (err, data) => {
                     if(err) {
                         res.writeHead(404);
-                        res.end();
+                        res.end('404 Not Found!');
                         return;
                     }
 

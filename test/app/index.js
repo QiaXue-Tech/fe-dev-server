@@ -2,13 +2,13 @@
 const FeDevServer = require('../../index');
 const app = new FeDevServer();
 
-app.get('/', (req, res) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
-    res.write('<head><meta charset="utf-8"/></head>');
-    res.end('访问了 /');
-});
+// app.get('/', (req, res) => {
+//     res.writeHead(200, {
+//         'Content-Type': 'text/html'
+//     });
+//     res.write('<head><meta charset="utf-8"/></head>');
+//     res.end('访问了 /');
+// });
 app.get('/start', (req, res) => {
     res.writeHead(200, {
         'Content-Type': 'text/html'
@@ -30,8 +30,17 @@ app.post('/user', (req, res)=>{
     });
     res.write('<head><meta charset="utf-8"/></head>');
     res.end('访问了 /user');
-})
+});
 
 app.renderView('/index', '/views/index.html');
+
+app.router.proxyTable = {
+    'api': {
+        host: 'localhost',
+        port: 3000
+    }
+}
+
+app.indexPage = '/test/app/index.html';
 
 app.runServer();
